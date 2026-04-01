@@ -1,22 +1,26 @@
-import { useState } from "react";
+import { type ChangeEvent, type FormEvent, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { UserPlus } from "lucide-react";
-import { createPerson } from "../lib/api";
+import { createPerson, type PersonInput } from "../lib/api";
 
-const emptyForm = { name: "", dob: "", address: "" };
+const emptyForm: PersonInput = { name: "", dob: "", address: "" };
 
-export function PersonForm({ onSaved }) {
-  const [form, setForm] = useState(emptyForm);
+interface PersonFormProps {
+  onSaved: () => void;
+}
+
+export function PersonForm({ onSaved }: PersonFormProps) {
+  const [form, setForm] = useState<PersonInput>(emptyForm);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  function handleChange(e) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
     setSaving(true);
@@ -72,17 +76,6 @@ export function PersonForm({ onSaved }) {
             value={form.address}
             onChange={handleChange}
             required
-          />
-        </div>
-
-        <div className="space-y-1.5">
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input
-            id="phone"
-            name="phone"
-            placeholder="+61 400 000 000"
-            value={form.phone || ""}
-            onChange={handleChange}
           />
         </div>
 

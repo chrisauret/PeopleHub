@@ -1,7 +1,16 @@
+export interface Person {
+  id: number;
+  name: string;
+  dob: string;
+  address: string;
+}
+
+export type PersonInput = Omit<Person, "id">;
+
 const API_URL = import.meta.env.VITE_API_URL || "";
 const BASE = `${API_URL}/people`;
 
-const SAMPLE_PEOPLE = [
+const SAMPLE_PEOPLE: Person[] = [
   {
     id: 1,
     name: "Alice Johnson",
@@ -34,17 +43,15 @@ const SAMPLE_PEOPLE = [
   },
 ];
 
-// export async function fetchPeople() {
-//   return structuredClone(SAMPLE_PEOPLE);
-// }
+void SAMPLE_PEOPLE;
 
-export async function fetchPeople() {
+export async function fetchPeople(): Promise<Person[]> {
   const res = await fetch(BASE);
   if (!res.ok) throw new Error("Failed to fetch people");
   return res.json();
 }
 
-export async function createPerson(data) {
+export async function createPerson(data: PersonInput): Promise<Person> {
   const res = await fetch(BASE, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -54,7 +61,7 @@ export async function createPerson(data) {
   return res.json();
 }
 
-export async function updatePerson(id, data) {
+export async function updatePerson(id: number, data: PersonInput): Promise<Person> {
   const res = await fetch(`${BASE}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -64,7 +71,7 @@ export async function updatePerson(id, data) {
   return res.json();
 }
 
-export async function deletePerson(id) {
+export async function deletePerson(id: number): Promise<void> {
   const res = await fetch(`${BASE}/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Failed to delete");
 }

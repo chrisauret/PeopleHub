@@ -2,18 +2,23 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import { EditDialog } from './EditDialog';
 import { Pencil, Trash2, Users } from 'lucide-react';
-import { deletePerson } from '../lib/api';
+import { deletePerson, type Person } from '../lib/api';
 
-export function PeopleTable({ people, onRefresh }) {
-  const [editPerson, setEditPerson] = useState(null);
+interface PeopleTableProps {
+  people: Person[];
+  onRefresh: () => void;
+}
 
-  async function handleDelete(id) {
+export function PeopleTable({ people, onRefresh }: PeopleTableProps) {
+  const [editPerson, setEditPerson] = useState<Person | null>(null);
+
+  async function handleDelete(id: number) {
     if (!confirm('Delete this person?')) return;
     await deletePerson(id);
     onRefresh();
   }
 
-  function formatDob(dob) {
+  function formatDob(dob: string) {
     if (!dob) return '—';
     return new Date(dob).toLocaleDateString('en-AU', {
       day: '2-digit', month: 'short', year: 'numeric',

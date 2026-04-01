@@ -1,3 +1,4 @@
+import { type ComponentPropsWithoutRef } from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -6,11 +7,7 @@ export const Dialog = DialogPrimitive.Root;
 export const DialogTrigger = DialogPrimitive.Trigger;
 export const DialogClose = DialogPrimitive.Close;
 
-export function DialogPortal({ ...props }) {
-  return <DialogPrimitive.Portal {...props} />;
-}
-
-export function DialogOverlay({ className, ...props }) {
+export function DialogOverlay({ className, ...props }: ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>) {
   return (
     <DialogPrimitive.Overlay
       className={cn(
@@ -24,9 +21,11 @@ export function DialogOverlay({ className, ...props }) {
   );
 }
 
-export function DialogContent({ className, children, ...props }) {
+interface DialogContentProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {}
+
+export function DialogContent({ className, children, ...props }: DialogContentProps) {
   return (
-    <DialogPortal>
+    <DialogPrimitive.Portal>
       <DialogOverlay />
       <DialogPrimitive.Content
         className={cn(
@@ -42,15 +41,17 @@ export function DialogContent({ className, children, ...props }) {
           <X className="h-4 w-4" />
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
-    </DialogPortal>
+    </DialogPrimitive.Portal>
   );
 }
 
-export function DialogHeader({ className, ...props }) {
+interface DialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+export function DialogHeader({ className, ...props }: DialogHeaderProps) {
   return <div className={cn('flex flex-col space-y-1.5 mb-4', className)} {...props} />;
 }
 
-export function DialogTitle({ className, ...props }) {
+export function DialogTitle({ className, ...props }: ComponentPropsWithoutRef<typeof DialogPrimitive.Title>) {
   return (
     <DialogPrimitive.Title
       className={cn('text-lg font-semibold text-slate-900', className)}

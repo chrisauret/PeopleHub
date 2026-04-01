@@ -2,10 +2,10 @@ import { useState, useEffect, useCallback } from "react";
 import { PersonForm } from "./components/PersonForm";
 import { PeopleTable } from "./components/PeopleTable";
 import { Database } from "lucide-react";
-import { fetchPeople as fetchPeopleApi } from "./lib/api";
+import { fetchPeople as fetchPeopleApi, type Person } from "./lib/api";
 
 export default function App() {
-  const [people, setPeople] = useState([]);
+  const [people, setPeople] = useState<Person[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchPeople = useCallback(async () => {

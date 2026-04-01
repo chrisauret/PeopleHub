@@ -1,6 +1,9 @@
+import { type LabelHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 
-export function Label({ className, ...props }) {
+interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}
+
+export function Label({ className, ...props }: LabelProps) {
   return (
     <label
       className={cn(
