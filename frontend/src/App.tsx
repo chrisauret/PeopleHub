@@ -49,9 +49,9 @@ export default function App() {
       <main className="max-w-5xl mx-auto px-6 py-8 space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Form — left column */}
-          {/* <div className="lg:col-span-1">
+          <div className="lg:col-span-1">
             <PersonForm onSaved={fetchPeople} />
-          </div> */}
+          </div>
 
           {/* Table — right columns */}
           <div className="lg:col-span-2">
